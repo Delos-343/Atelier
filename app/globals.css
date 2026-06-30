@@ -1,0 +1,377 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =====================================================================
+   Design tokens — drive light/dark mode and the sea-blue gradient.
+   Tailwind semantic colors (bg, surface, accent…) resolve to these.
+   ===================================================================== */
+:root {
+  --bg: #f3efe6;
+  --bg-grad: var(--bg);
+  --surface: #fbf9f3;
+  --surface-2: #f6f2e9;
+  --text: #1b2024;
+  --text-soft: #3c4248;
+  --muted: #71757a;
+  --border: #e4ddce;
+  --border-strong: #d6ceba;
+  --accent: #0f6b70;
+  --accent-2: #14868c;
+  --accent-ink: #ffffff;
+  --ok: #2f7d5b;
+  --warn: #9a7b1f;
+  --bad: #b04a42;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+html[data-theme='dark'] {
+  --bg: #07182b;
+  --bg-grad: radial-gradient(125% 120% at 50% 0%, #0e3d56 0%, #0a2a44 38%, #07192d 72%, #050f1d 100%);
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-2: rgba(255, 255, 255, 0.075);
+  --text: #e9f1f3;
+  --text-soft: #c6d6dc;
+  --muted: #93abb6;
+  --border: rgba(255, 255, 255, 0.11);
+  --border-strong: rgba(255, 255, 255, 0.2);
+  --accent: #5fd2c6;
+  --accent-2: #7ad6df;
+  --accent-ink: #062023;
+  --ok: #74d39c;
+  --warn: #e2c378;
+  --bad: #ec9a92;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  html[data-theme='dark'] {
+    color-scheme: dark;
+  }
+  body {
+    @apply min-h-screen font-sans text-text antialiased;
+    background: var(--bg);
+    background-image: var(--bg-grad);
+    background-attachment: fixed;
+    line-height: 1.6;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+/* =====================================================================
+   Components — primitives that need real CSS (gradient already above):
+   the responsive table (attr(data-label) card-stacking), color-mix
+   surfaces, and the ::before tree markers. Layout lives in utilities.
+   ===================================================================== */
+
+/* justified prose: descriptive copy only, not labels or data */
+.prose-justify {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+.mono {
+  @apply font-mono;
+  font-size: 0.84rem;
+  color: var(--text);
+}
+
+.label {
+  @apply uppercase text-muted;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+}
+
+.section-label {
+  @apply uppercase text-accent;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+}
+
+/* buttons */
+.btn {
+  @apply inline-flex cursor-pointer items-center justify-center rounded font-semibold;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: 1px solid transparent;
+  padding: 0.62rem 1.15rem;
+  font-size: 0.9rem;
+}
+.btn:hover {
+  background: var(--accent-2);
+}
+.btn:disabled {
+  @apply cursor-not-allowed opacity-50;
+}
+.btn-sm {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+.btn-ghost:hover {
+  background: var(--surface-2);
+  border-color: var(--accent);
+}
+.btn-ok {
+  background: var(--ok);
+  color: var(--accent-ink);
+}
+.btn-bad {
+  background: var(--bad);
+  color: var(--accent-ink);
+}
+
+/* form input */
+.input {
+  @apply w-full rounded;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  padding: 0.6rem 0.7rem;
+  font-size: 0.92rem;
+  font-family: inherit;
+}
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+/* card */
+.card {
+  @apply rounded;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 1.5rem;
+  box-shadow: 0 1px 2px rgba(20, 28, 33, 0.04), 0 6px 24px rgba(20, 28, 33, 0.05);
+}
+html[data-theme='dark'] .card,
+html[data-theme='dark'] .table-wrap,
+html[data-theme='dark'] .nav-bar {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 10px 36px rgba(0, 0, 0, 0.28);
+}
+
+/* badges */
+.badge {
+  @apply inline-block whitespace-nowrap rounded-full text-muted;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  padding: 0.16rem 0.55rem;
+  margin: 0.1rem 0.25rem 0.1rem 0;
+  border: 1px solid var(--border-strong);
+}
+.badge-ok {
+  color: var(--ok);
+  border-color: color-mix(in srgb, var(--ok) 45%, transparent);
+}
+.badge-warn {
+  color: var(--warn);
+  border-color: color-mix(in srgb, var(--warn) 45%, transparent);
+}
+.badge-bad {
+  color: var(--bad);
+  border-color: color-mix(in srgb, var(--bad) 45%, transparent);
+}
+.badge-mute {
+  color: var(--muted);
+}
+
+/* content links */
+.rowlink {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+}
+.rowlink:hover {
+  color: var(--accent);
+}
+.backlink {
+  @apply mb-5 inline-block;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+.backlink:hover {
+  color: var(--text);
+}
+
+/* sticky nav bar surface (color-mix + blur) */
+.nav-bar {
+  @apply sticky top-0 z-20;
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.icon-btn {
+  @apply inline-grid h-[38px] w-[38px] cursor-pointer place-items-center rounded;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-soft);
+}
+.icon-btn:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+/* responsive table: real table on desktop, labelled cards on mobile */
+.table-wrap {
+  @apply w-full overflow-hidden rounded;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: 0 1px 2px rgba(20, 28, 33, 0.04), 0 6px 24px rgba(20, 28, 33, 0.05);
+}
+.table {
+  @apply w-full border-collapse;
+  font-size: 0.9rem;
+}
+.table thead th {
+  @apply text-left uppercase text-muted;
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.09em;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+.table tbody td {
+  color: var(--text-soft);
+  padding: 0.75rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+.table tbody tr:hover {
+  background: var(--surface-2);
+}
+.ta-r {
+  text-align: right;
+}
+
+@media (max-width: 640px) {
+  .table,
+  .table thead,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+  .table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .table tbody tr {
+    padding: 0.5rem 0.9rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.4rem 0;
+    border: none;
+    text-align: right;
+  }
+  .table tbody td::before {
+    content: attr(data-label);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+  }
+}
+
+/* offline banner (color-mix tints) */
+.offbar {
+  @apply flex items-center gap-2.5;
+  max-width: var(--maxw, 1080px);
+  margin: 0 auto;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.82rem;
+  border-bottom: 1px solid var(--border);
+}
+.offbar-offline {
+  color: var(--bad);
+  background: color-mix(in srgb, var(--bad) 12%, transparent);
+}
+.offbar-pending {
+  color: var(--warn);
+  background: color-mix(in srgb, var(--warn) 12%, transparent);
+}
+.offbar-dot {
+  @apply rounded-full;
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  flex: none;
+}
+.offbar-btn {
+  @apply rounded;
+  background: transparent;
+  border: 1px solid currentColor;
+  color: inherit;
+  padding: 0.22rem 0.6rem;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+/* genealogy tree */
+.tree {
+  list-style: none;
+}
+.tree li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.tree li::before {
+  content: '└';
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn,
+  .icon-btn,
+  .nav-link,
+  .table tbody tr {
+    transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+  }
+}
+
+/* nav link (hover surface) — layout handled by utilities */
+.nav-link {
+  @apply rounded text-muted no-underline;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.88rem;
+}
+.nav-link:hover {
+  color: var(--text);
+  background: var(--surface-2);
+}
+}
