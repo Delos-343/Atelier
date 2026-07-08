@@ -9,7 +9,7 @@ import { getUserAndRole } from '@/lib/auth/session';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'TechnicoFlor — Perfume ERP',
+  title: 'TechnicoFlor - Perfume ERP',
   description: 'Manufacturing core: formula, production, quality control, inventory.',
   manifest: '/manifest.webmanifest',
   applicationName: 'TechnicoFlor',
