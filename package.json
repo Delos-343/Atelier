@@ -1,0 +1,52 @@
+{
+  "name": "erp-perfume",
+  "version": "0.51.0",
+  "private": true,
+  "packageManager": "yarn@1.22.22",
+  "description": "Perfume ERP \u2014 manufacturing core (formula -> production -> QC -> inventory)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run src",
+    "test:integration": "vitest run db",
+    "test:all": "vitest run",
+    "db:migrate": "node scripts/migrate.mjs",
+    "db:test:setup": "node scripts/migrate.mjs --local",
+    "db:seed": "node scripts/seed.mjs",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run --e2e",
+    "cypress:component": "cypress run --component",
+    "typecheck:e2e": "tsc -p cypress/tsconfig.json --noEmit",
+    "gen:types": "node scripts/gen-types.mjs > src/types/database.ts"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.12.0",
+    "@supabase/supabase-js": "^2.45.4",
+    "decimal.js": "^10.4.3",
+    "framer-motion": "^11.11.17",
+    "next": "^14.2.15",
+    "nodemailer": "^6.9.16",
+    "pdf-lib": "^1.17.1",
+    "pg": "^8.12.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.10",
+    "@types/nodemailer": "^6",
+    "@types/pg": "^8.11.10",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.0",
+    "@types/smtp-server": "^3",
+    "autoprefixer": "10",
+    "cypress": "13.15.0",
+    "postcss": "8",
+    "smtp-server": "^3.13.6",
+    "tailwindcss": "3.4.14",
+    "typescript": "^5.6.2",
+    "vitest": "^2.1.2"
+  }
+}
