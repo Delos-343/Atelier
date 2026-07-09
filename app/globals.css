@@ -99,6 +99,15 @@ html[data-theme='dark'] {
   font-size: 0.72rem;
   letter-spacing: 0.05em;
 }
+/* Field-label SPANS always stack above their control. Without this a fixed-width
+   input/select (e.g. a date or the Receipts customer picker) sits INLINE beside its
+   label on desktop, because .label is otherwise inline. Scoped to `span` so the
+   <label>/<dt> uses of .label (costing, inventory & production detail grids) are
+   untouched. */
+span.label {
+  display: block;
+  margin-bottom: 0.3rem;
+}
 
 .section-label {
   @apply uppercase text-accent;

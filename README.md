@@ -1,4 +1,4 @@
-# TechnicoFlor — Perfume ERP (Manufacturing Core) · v0.51.5
+# TechnicoFlor — Perfume ERP (Manufacturing Core) · v0.51.6
 
 A ground-up rebuild of the **ERP Perfume: Manufacturing & Distribution System** for TFI,
 on Next.js 14 + Supabase (PostgreSQL), shipped as an offline-capable PWA. Package manager: **Yarn**.
@@ -11,7 +11,7 @@ layered on a core that cannot silently corrupt stock or leak trade secrets.
 ## Version history
 
 The complete version history — a condensed slice-by-slice summary plus detailed release notes for
-every release from v0.5 through the current **v0.51.5** — is kept in a dedicated document,
+every release from v0.5 through the current **v0.51.6** — is kept in a dedicated document,
 **ERP Perfume - Version History & Release Notes.docx**, alongside this file. This README is the project's operating manual and technical
 reference; the changelog lives there.
 
