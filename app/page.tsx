@@ -122,7 +122,7 @@ export default async function Home() {
       </section>
 
       <footer className="mt-8 text-[0.82rem] text-muted">
-        1981 – 2026 TechnicoFlor Group &amp; | &amp; All Rights Reserved.
+        1981 – 2026 TechnicoFlor Group &nbsp; | &nbsp; All Rights Reserved.
       </footer>
     </main>
   );
