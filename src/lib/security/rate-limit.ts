@@ -54,10 +54,13 @@ interface Window {
 }
 const store = new Map<string, Window>();
 
-// Opportunistic sweep so the Map can't grow without bound under many distinct
-// keys (e.g. a spray of IPs). Cheap: only runs when the store gets large.
+// Opportunistic sweep so the Map can't grow without bound under many distinct keys
+// (e.g. a spray of IPs). Time-throttled to at most once per window-ish interval, so a
+// sustained spray of >10k live keys can't turn every request into a full O(n) scan.
+let lastSweep = 0;
 function sweep(now: number): void {
-  if (store.size < 10_000) return;
+  if (store.size < 10_000 || now - lastSweep < 10_000) return;
+  lastSweep = now;
   for (const [k, w] of store) {
     if (w.reset <= now) store.delete(k);
   }
@@ -109,13 +112,25 @@ async function upstash(
       ['PEXPIRE', key, String(windowMs), 'NX'],
       ['PTTL', key],
     ]),
+    // (see below: we repair a missing TTL from the returned PTTL)
     // Never let a slow limiter stall a request for long.
     signal: AbortSignal.timeout(1000),
   });
   if (!res.ok) throw new Error(`upstash ${res.status}`);
   const parts = (await res.json()) as Array<{ result?: number; error?: string }>;
   const count = Number(parts[0]?.result ?? 0);
-  const pttl = Number(parts[2]?.result ?? windowMs);
+  let pttl = Number(parts[2]?.result ?? windowMs);
+  // Fail-safe against a key with no expiry (PEXPIRE NX no-op / race): a persistent key
+  // would block its identifier forever. If a freshly-incremented key reports no TTL,
+  // arm one unconditionally (fire-and-forget) and treat the window as full-length.
+  if (pttl < 0) {
+    pttl = windowMs;
+    void fetch(`${env.url}/pexpire/${encodeURIComponent(key)}/${windowMs}`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${env.token}` },
+      signal: AbortSignal.timeout(1000),
+    }).catch(() => {});
+  }
   const reset = now + (pttl > 0 ? pttl : windowMs);
   const remaining = Math.max(0, limit - count);
   const ok = count <= limit;

@@ -37,23 +37,32 @@ export default function LoginPage() {
     }
     setBusy(true);
     setError(null);
-    const { error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-      options: captchaToken ? { captchaToken } : undefined,
-    });
-    setBusy(false);
-    if (authError) {
-      setError(authError.message);
-      // The token is single-use; fetch a fresh one for the next attempt.
+    try {
+      const { error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+        options: captchaToken ? { captchaToken } : undefined,
+      });
+      if (authError) {
+        setError(authError.message);
+        // The token is single-use; fetch a fresh one for the next attempt.
+        captchaRef.current?.reset();
+        setCaptchaToken(null);
+        return;
+      }
+      // Honor a safe internal ?next, else land in the app.
+      const next = new URLSearchParams(window.location.search).get('next');
+      router.push(next && next.startsWith('/') ? next : '/app');
+      router.refresh();
+    } catch {
+      // Network / unexpected failure — surface it and reset the challenge instead of
+      // leaving the button stuck in its busy state.
+      setError('Couldn’t reach the sign-in service. Check your connection and try again.');
       captchaRef.current?.reset();
       setCaptchaToken(null);
-      return;
+    } finally {
+      setBusy(false);
     }
-    // Honor a safe internal ?next, else land in the app.
-    const next = new URLSearchParams(window.location.search).get('next');
-    router.push(next && next.startsWith('/') ? next : '/app');
-    router.refresh();
   }
 
   return (

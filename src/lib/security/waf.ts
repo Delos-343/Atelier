@@ -42,13 +42,22 @@ const NULL_BYTE = /\x00|%00/i;
 const XSS = /(<script\b|javascript:|\bon(error|load|click)\s*=)/i;
 
 function safeDecode(s: string): string {
-  try {
-    return decodeURIComponent(s);
-  } catch {
-    // A malformed %-sequence is itself suspicious; return the raw so the null-byte
-    // / traversal checks can still see the literal characters.
-    return s;
+  // Decode repeatedly so DOUBLE-encoded evasions (e.g. %253Cscript -> %3Cscript ->
+  // <script) are normalized before the payload checks run. Bounded to avoid loops.
+  let cur = s;
+  for (let i = 0; i < 3; i++) {
+    let next: string;
+    try {
+      next = decodeURIComponent(cur);
+    } catch {
+      // A malformed %-sequence is itself suspicious; keep the last good value so the
+      // null-byte / traversal checks can still see the literal characters.
+      break;
+    }
+    if (next === cur) break;
+    cur = next;
   }
+  return cur;
 }
 
 /**

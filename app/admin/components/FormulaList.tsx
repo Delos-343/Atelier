@@ -80,7 +80,7 @@ export function FormulaList() {
         <p className="badge bg-surface-2">Offline — formula editing is available when reconnected.</p>
       )}
 
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <span className="section-label">
           {rows ? `${rows.length} formula${rows.length === 1 ? '' : 's'}` : 'Loading…'}
         </span>

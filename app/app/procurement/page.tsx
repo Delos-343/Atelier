@@ -109,7 +109,7 @@ function ReceivePanel({ po, onDone }: { po: PurchaseOrderSummary; onDone: () => 
   return (
     <div className="mt-3 border-t border-[var(--border)] pt-3">
       <h3 className="section-label">Receive stock</h3>
-      <table className="mt-2 w-full text-[0.9rem]">
+      <div className="w-full overflow-x-auto"><table className="mt-2 w-full text-[0.9rem] min-w-[46rem]">
         <thead>
           <tr className="text-muted text-[0.78rem] uppercase tracking-[0.06em]">
             <th className="py-1 text-left font-medium">Material</th>
@@ -159,10 +159,10 @@ function ReceivePanel({ po, onDone }: { po: PurchaseOrderSummary; onDone: () => 
             );
           })}
         </tbody>
-      </table>
+      </table></div>
       {err && <p className="mt-2 text-[0.85rem] text-bad">{err}</p>}
       <div className="mt-3">
-        <button type="button" className="btn btn-sm" onClick={submit} disabled={busy}>
+        <button type="button" className="btn btn-sm w-full sm:w-auto" onClick={submit} disabled={busy}>
           {busy ? 'Receiving…' : 'Receive'}
         </button>
       </div>
@@ -207,36 +207,36 @@ function BillPanel({ po, onDone }: { po: PurchaseOrderSummary; onDone: () => voi
   return (
     <div className="mt-3 border-t border-[var(--border)] pt-3">
       <h3 className="section-label">Bill this order</h3>
-      <div className="mt-2 flex flex-wrap items-end gap-3">
-        <label className="block">
+      <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
+        <label className="block sm:flex-1 sm:min-w-[9rem]">
           <span className="label">Supplier bill no.</span>
-          <input className="input w-44" value={billNumber} onChange={(e) => setBillNumber(e.target.value)} />
+          <input className="input w-full" value={billNumber} onChange={(e) => setBillNumber(e.target.value)} />
         </label>
-        <label className="block">
+        <label className="block sm:flex-1 sm:min-w-[9rem]">
           <span className="label">Bill date</span>
-          <input className="input w-40" type="date" value={billDate} onChange={(e) => setBillDate(e.target.value)} />
+          <input className="input w-full" type="date" value={billDate} onChange={(e) => setBillDate(e.target.value)} />
         </label>
-        <label className="block">
+        <label className="block sm:flex-1 sm:min-w-[9rem]">
           <span className="label">Amount</span>
           <input
-            className="input w-36 text-right"
+            className="input w-full text-right"
             inputMode="decimal"
             placeholder={money(po.receivedValue || po.orderedValue)}
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
           />
         </label>
-        <label className="block">
+        <label className="block sm:flex-1 sm:min-w-[9rem]">
           <span className="label">of which PPN</span>
           <input
-            className="input w-32 text-right"
+            className="input w-full text-right"
             inputMode="decimal"
             placeholder="0.00"
             value={tax}
             onChange={(e) => setTax(e.target.value)}
           />
         </label>
-        <button type="button" className="btn btn-sm" onClick={submit} disabled={busy}>
+        <button type="button" className="btn btn-sm w-full sm:w-auto" onClick={submit} disabled={busy}>
           {busy ? 'Billing…' : 'Create bill'}
         </button>
       </div>
@@ -331,14 +331,14 @@ export default function ProcurementPage() {
 
       <section className="card">
         <h2 className="section-label">New purchase order</h2>
-        <div className="mt-2 flex flex-wrap items-end gap-3">
-          <label className="block">
+        <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
+          <label className="block sm:flex-1 sm:min-w-[10rem]">
             <span className="label">Code</span>
-            <input className="input w-40" placeholder="PO-2026-001" value={code} onChange={(e) => setCode(e.target.value)} />
+            <input className="input w-full" placeholder="PO-2026-001" value={code} onChange={(e) => setCode(e.target.value)} />
           </label>
-          <label className="block">
+          <label className="block sm:flex-[1.4] sm:min-w-[12rem]">
             <span className="label">Supplier</span>
-            <select className="input w-56" value={supplierId} onChange={(e) => setSupplierId(e.target.value)}>
+            <select className="input w-full" value={supplierId} onChange={(e) => setSupplierId(e.target.value)}>
               <option value="">Select a supplier…</option>
               {(suppliers.data ?? []).map((s) => (
                 <option key={s.id} value={s.id}>
@@ -347,9 +347,9 @@ export default function ProcurementPage() {
               ))}
             </select>
           </label>
-          <label className="block">
+          <label className="block sm:flex-[1.2] sm:min-w-[11rem]">
             <span className="label">Warehouse</span>
-            <select className="input w-48" value={warehouseId} onChange={(e) => setWarehouseId(e.target.value)}>
+            <select className="input w-full" value={warehouseId} onChange={(e) => setWarehouseId(e.target.value)}>
               <option value="">Select…</option>
               {(warehouses.data ?? []).map((w) => (
                 <option key={w.id} value={w.id}>
@@ -358,13 +358,13 @@ export default function ProcurementPage() {
               ))}
             </select>
           </label>
-          <label className="block">
+          <label className="block sm:flex-1 sm:min-w-[10rem]">
             <span className="label">Order date</span>
-            <input className="input w-40" type="date" value={orderDate} onChange={(e) => setOrderDate(e.target.value)} />
+            <input className="input w-full" type="date" value={orderDate} onChange={(e) => setOrderDate(e.target.value)} />
           </label>
         </div>
 
-        <table className="mt-4 w-full text-[0.9rem]">
+        <div className="w-full overflow-x-auto"><table className="mt-4 w-full text-[0.9rem] min-w-[46rem]">
           <thead>
             <tr className="text-muted text-[0.78rem] uppercase tracking-[0.06em]">
               <th className="py-1 text-left font-medium">Material</th>
@@ -434,7 +434,7 @@ export default function ProcurementPage() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </table></div>
         <div className="mt-2">
           <button type="button" className="btn btn-sm btn-ghost" onClick={() => setLines((ls) => [...ls, blankLine()])}>
             Add line
@@ -486,7 +486,7 @@ export default function ProcurementPage() {
             {visibleOrders.map((po) => (
               <div key={po.id} className="card">
                 <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-3">
                     <span className="mono font-semibold">{po.code}</span>
                     <StatusBadge value={po.status} tones={PO_TONES}>
                       {PO_LABEL[po.status] ?? po.status}
@@ -494,7 +494,7 @@ export default function ProcurementPage() {
                     <span className="text-muted text-[0.85rem]">{po.supplierName}</span>
                     <span className="text-muted text-[0.85rem]">· {po.warehouseName}</span>
                   </div>
-                  <div className="flex items-center gap-4 text-[0.85rem]">
+                  <div className="flex flex-wrap items-center gap-4 text-[0.85rem]">
                     <span>
                       <span className="text-muted">ordered </span>
                       <span className="mono">{money(po.orderedValue)}</span>
@@ -555,7 +555,7 @@ export default function ProcurementPage() {
                 </div>
 
                 {expanded === po.id && (
-                  <table className="mt-3 w-full text-[0.9rem]">
+                  <div className="w-full overflow-x-auto"><table className="mt-3 w-full text-[0.9rem] min-w-[46rem]">
                     <thead>
                       <tr className="text-muted text-[0.78rem] uppercase tracking-[0.06em]">
                         <th className="py-1 text-left font-medium">Material</th>
@@ -580,7 +580,7 @@ export default function ProcurementPage() {
                         </tr>
                       ))}
                     </tbody>
-                  </table>
+                  </table></div>
                 )}
 
                 {panel?.id === po.id && panel.kind === 'receive' && <ReceivePanel po={po} onDone={afterMutation} />}

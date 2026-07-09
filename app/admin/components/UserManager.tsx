@@ -183,7 +183,7 @@ export function UserManager() {
       {/* Account management: create form, or a notice when the service-role key is absent */}
       {canManage ? (
         <section className="grid gap-3">
-          <div className="flex items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <span className="section-label">Accounts</span>
             <button
               className="btn btn-sm"

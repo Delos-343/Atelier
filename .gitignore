@@ -20,3 +20,7 @@ next-env.d.ts
 # misc
 .DS_Store
 *.log
+
+# vitest / vite temp files
+/vitest.sec.config.*
+*.timestamp-*.mjs

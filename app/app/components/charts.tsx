@@ -1,7 +1,8 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { useCountUp, useMounted, usePrefersReducedMotion } from './useAnim';
+import { useReducedMotion } from 'framer-motion';
+import { useCountUp, useMounted } from './useAnim';
 
 export interface Segment {
   label: string;
@@ -61,7 +62,7 @@ function EmptyNote({ children }: { children: ReactNode }) {
 /** Horizontal bars (counts). */
 export function HBars({ items, unit }: { items: Segment[]; unit?: string }) {
   const mounted = useMounted();
-  const reduced = usePrefersReducedMotion();
+  const reduced = useReducedMotion() ?? false;
   const max = Math.max(1, ...items.map((i) => i.value));
   const total = items.reduce((s, i) => s + i.value, 0);
   if (total === 0) return <EmptyNote>No data yet.</EmptyNote>;
@@ -97,7 +98,7 @@ export function HBars({ items, unit }: { items: Segment[]; unit?: string }) {
 /** Vertical bars (values). */
 export function VBars({ items, money = false }: { items: Segment[]; money?: boolean }) {
   const mounted = useMounted();
-  const reduced = usePrefersReducedMotion();
+  const reduced = useReducedMotion() ?? false;
   const max = Math.max(1, ...items.map((i) => i.value));
   const total = items.reduce((s, i) => s + i.value, 0);
   if (total === 0) return <EmptyNote>No data yet.</EmptyNote>;
@@ -142,7 +143,7 @@ export function Donut({
   centerLabel: string;
 }) {
   const mounted = useMounted();
-  const reduced = usePrefersReducedMotion();
+  const reduced = useReducedMotion() ?? false;
   const total = segments.reduce((s, x) => s + x.value, 0);
 
   let cumulative = 0;

@@ -147,7 +147,7 @@ export default function ReceivablesAgingPage() {
             <h3 className="text-[1.05rem] font-semibold text-text">
               Statement — {selectedCustomer.customerName}
             </h3>
-            <span className="flex items-center gap-3">
+            <span className="flex flex-wrap items-center gap-3">
               <span className="text-[0.85rem] text-muted">
                 {selectedCustomer.invoices.length} open · {money(selectedCustomer.open)} outstanding
               </span>

@@ -265,7 +265,7 @@ export default function CustomerLedgerPage() {
           )}
 
           <section className="card mt-4 overflow-x-auto">
-            <table className="w-full text-[0.9rem]">
+            <div className="w-full overflow-x-auto"><table className="w-full text-[0.9rem] min-w-[44rem]">
               <thead>
                 <tr className="text-muted text-[0.78rem] uppercase tracking-[0.06em]">
                   <th className="py-1 text-left font-medium">Date</th>
@@ -290,7 +290,7 @@ export default function CustomerLedgerPage() {
                   );
                 })}
               </tbody>
-            </table>
+            </table></div>
           </section>
 
           <p className="mt-3 text-[0.82rem] text-muted">

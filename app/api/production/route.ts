@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { apiAuth } from '@/lib/auth/api-guard';
 import { createClient } from '@/lib/supabase/server';
 import { supabaseNotConfigured } from '@/lib/supabase/guard';
 import { createProductionOrder } from '@/server/production';
@@ -18,6 +19,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const auth = await apiAuth('production');
+  if (!auth.ok) return auth.response;
+
   const body = await request.json().catch(() => null);
   if (!body) return NextResponse.json({ error: 'invalid JSON body' }, { status: 400 });
 

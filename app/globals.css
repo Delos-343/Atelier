@@ -57,6 +57,11 @@ html[data-theme='dark'] {
     background-image: var(--bg-grad);
     background-attachment: fixed;
     line-height: 1.6;
+    /* Safety net: stop any stray element from forcing a horizontal PAGE scroll on
+       mobile. `clip` (not `hidden`) creates no scroll container, so it never breaks
+       the sticky nav or nested overflow-x-auto scrollers — dense tables keep their
+       own horizontal scroll within their card. */
+    overflow-x: clip;
   }
   ::selection {
     background: var(--accent);

@@ -85,7 +85,7 @@ function AllocationEditor({
 
   return (
     <div>
-      <div className="mb-2 flex items-center justify-between gap-3">
+      <div className="mb-2 flex flex-wrap items-center justify-between gap-3">
         <button type="button" className="btn btn-sm btn-ghost" onClick={autoApply}>
           Auto-apply (oldest first)
         </button>
@@ -94,7 +94,7 @@ function AllocationEditor({
           {remainder >= 0 ? ` · ${money(remainder)} on account` : ` · ${money(-remainder)} over`}
         </span>
       </div>
-      <table className="w-full text-[0.9rem]">
+      <div className="w-full overflow-x-auto"><table className="w-full text-[0.9rem] min-w-[34rem]">
         <thead>
           <tr className="text-muted text-[0.78rem] uppercase tracking-[0.06em]">
             <th className="py-1 text-left font-medium">Invoice</th>
@@ -122,7 +122,7 @@ function AllocationEditor({
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
       {err && <p className="mt-2 text-[0.85rem] text-bad">{err}</p>}
       <div className="mt-3">
         <button type="button" className="btn btn-sm" onClick={submit} disabled={busy || remainder < -1e-6}>
@@ -228,7 +228,7 @@ export default function ReceiptsPage() {
         <label className="block">
           <span className="label">Customer</span>
           <select
-            className="input w-72"
+            className="input w-full sm:w-72"
             value={customerId}
             onChange={(e) => {
               setCustomerId(e.target.value);
@@ -315,7 +315,7 @@ export default function ReceiptsPage() {
                 {receipts.map((r) => (
                   <div key={r.id} className="card">
                     <div className="flex flex-wrap items-center justify-between gap-3">
-                      <div className="flex items-center gap-3">
+                      <div className="flex flex-wrap items-center gap-3">
                         <span className="mono">{r.receiptDate}</span>
                         <span className="mono font-semibold">{money(r.amount)}</span>
                         {r.unapplied > 0 ? (
@@ -326,7 +326,7 @@ export default function ReceiptsPage() {
                         {r.method && <span className="text-muted text-[0.85rem]">{r.method}</span>}
                         {r.reference && <span className="text-muted text-[0.85rem]">· {r.reference}</span>}
                       </div>
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         {r.applicationCount > 0 && (
                           <button
                             type="button"
@@ -352,7 +352,7 @@ export default function ReceiptsPage() {
                     </div>
 
                     {expanded === r.id && r.applications.length > 0 && (
-                      <table className="mt-3 w-full text-[0.9rem]">
+                      <div className="w-full overflow-x-auto"><table className="mt-3 w-full text-[0.9rem] min-w-[34rem]">
                         <tbody>
                           {r.applications.map((a) => (
                             <tr key={a.id} className="border-t border-[var(--border)]">
@@ -364,7 +364,7 @@ export default function ReceiptsPage() {
                             </tr>
                           ))}
                         </tbody>
-                      </table>
+                      </table></div>
                     )}
 
                     {applyingTo === r.id && (

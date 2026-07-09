@@ -182,7 +182,7 @@ export function ResourceManager({ resource }: { resource: string }) {
 
   return (
     <div>
-      <div className="mb-4 flex items-center justify-between gap-3">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <span className="text-[0.85rem] text-muted">
           {listLoading ? 'Loading…' : `${rows.length} ${rows.length === 1 ? config.label : config.labelPlural.toLowerCase()}`}
         </span>
@@ -230,7 +230,11 @@ export function ResourceManager({ resource }: { resource: string }) {
         </p>
       )}
 
-      {!listLoading && rows.length === 0 && !listError ? (
+      {listLoading ? (
+        <div className="rounded border border-dashed border-border-strong bg-surface p-6 text-muted">
+          Loading {config.labelPlural.toLowerCase()}…
+        </div>
+      ) : listError ? null : rows.length === 0 ? (
         <div className="rounded border border-dashed border-border-strong bg-surface p-6 text-muted">
           No {config.labelPlural.toLowerCase()} yet. Create the first one above.
         </div>

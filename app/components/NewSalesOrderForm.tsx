@@ -132,9 +132,9 @@ export function NewSalesOrderForm({ onSubmitted }: { onSubmitted?: () => void })
       <h3 className="section-label mb-2 mt-6">Lines</h3>
       <div className="flex flex-col gap-2.5">
         {lines.map((l, i) => (
-          <div key={i} className="grid items-end gap-2 [grid-template-columns:2fr_1fr_0.8fr_1fr_auto]">
-            <label className="flex flex-col gap-1.5">
-              {i === 0 && <span className="label">Product</span>}
+          <div key={i} className="grid items-end gap-2 gap-y-3 [grid-template-columns:repeat(2,minmax(0,1fr))] sm:gap-y-2 sm:[grid-template-columns:2fr_1fr_0.8fr_1fr_auto]">
+            <label className="col-span-2 flex flex-col gap-1.5 sm:col-span-1">
+              <span className={`label ${i === 0 ? '' : 'sm:hidden'}`}>Product</span>
               <select className="input" value={l.productId} onChange={(e) => pickProduct(i, e.target.value)}>
                 <option value="">Select…</option>
                 {products.map((p) => (
@@ -143,22 +143,22 @@ export function NewSalesOrderForm({ onSubmitted }: { onSubmitted?: () => void })
               </select>
             </label>
             <label className="flex flex-col gap-1.5">
-              {i === 0 && <span className="label">Quantity</span>}
+              <span className={`label ${i === 0 ? '' : 'sm:hidden'}`}>Quantity</span>
               <input className="input" inputMode="decimal" value={l.quantity} onChange={(e) => setLine(i, { quantity: e.target.value })} />
             </label>
             <label className="flex flex-col gap-1.5">
-              {i === 0 && <span className="label">Unit</span>}
+              <span className={`label ${i === 0 ? '' : 'sm:hidden'}`}>Unit</span>
               <select className="input" value={l.unit} onChange={(e) => setLine(i, { unit: e.target.value as Unit })}>
                 {UNITS.map((u) => <option key={u} value={u}>{u}</option>)}
               </select>
             </label>
-            <label className="flex flex-col gap-1.5">
-              {i === 0 && <span className="label">Unit price</span>}
+            <label className="col-span-2 flex flex-col gap-1.5 sm:col-span-1">
+              <span className={`label ${i === 0 ? '' : 'sm:hidden'}`}>Unit price</span>
               <input className="input" inputMode="decimal" value={l.unitPrice} onChange={(e) => setLine(i, { unitPrice: e.target.value })} placeholder="0" />
             </label>
             <button
               type="button"
-              className="icon-btn mb-0.5"
+              className="icon-btn mb-0.5 col-span-2 justify-self-end sm:col-span-1 sm:justify-self-auto"
               aria-label="Remove line"
               onClick={() => removeLine(i)}
               disabled={lines.length === 1}

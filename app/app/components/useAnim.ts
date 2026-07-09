@@ -1,19 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-
-/** Reactive prefers-reduced-motion. Animations should no-op when this is true. */
-export function usePrefersReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const update = () => setReduced(mq.matches);
-    update();
-    mq.addEventListener('change', update);
-    return () => mq.removeEventListener('change', update);
-  }, []);
-  return reduced;
-}
+import { useReducedMotion } from 'framer-motion';
 
 /** False on first paint, true shortly after mount — used to trigger CSS transitions. */
 export function useMounted(delay = 40): boolean {
@@ -27,7 +15,7 @@ export function useMounted(delay = 40): boolean {
 
 /** Eased count from 0 to target (jumps straight to target under reduced motion). */
 export function useCountUp(target: number, durationMs = 900): number {
-  const reduced = usePrefersReducedMotion();
+  const reduced = useReducedMotion() ?? false;
   const [value, setValue] = useState(0);
   const rafRef = useRef<number | undefined>(undefined);
 

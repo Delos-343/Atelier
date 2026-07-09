@@ -42,17 +42,22 @@ export default function AcceptInvitePage() {
       if (session?.user) adopt(session.user.email ?? null);
     });
 
-    supabase.auth.getSession().then(({ data }) => {
-      if (!active) return;
-      if (data.session?.user) {
-        adopt(data.session.user.email ?? null);
-      } else {
-        // Give detectSessionInUrl a beat; if still nothing, treat the link as bad.
-        setTimeout(() => {
-          if (active) setPhase((p) => (p === 'checking' ? 'no-session' : p));
-        }, 1500);
-      }
-    });
+    supabase.auth
+      .getSession()
+      .then(({ data }) => {
+        if (!active) return;
+        if (data.session?.user) {
+          adopt(data.session.user.email ?? null);
+        } else {
+          // Give detectSessionInUrl a beat; if still nothing, treat the link as bad.
+          setTimeout(() => {
+            if (active) setPhase((p) => (p === 'checking' ? 'no-session' : p));
+          }, 1500);
+        }
+      })
+      .catch(() => {
+        if (active) setPhase('no-session');
+      });
 
     return () => {
       active = false;
@@ -72,17 +77,22 @@ export default function AcceptInvitePage() {
       return;
     }
     setBusy(true);
-    const { error: updErr } = await supabase.auth.updateUser({ password });
-    setBusy(false);
-    if (updErr) {
-      setError(updErr.message);
-      return;
+    try {
+      const { error: updErr } = await supabase.auth.updateUser({ password });
+      if (updErr) {
+        setError(updErr.message);
+        return;
+      }
+      setPhase('done');
+      setTimeout(() => {
+        router.push('/app');
+        router.refresh();
+      }, 1200);
+    } catch {
+      setError('Couldn’t reach the account service. Check your connection and try again.');
+    } finally {
+      setBusy(false);
     }
-    setPhase('done');
-    setTimeout(() => {
-      router.push('/app');
-      router.refresh();
-    }, 1200);
   }
 
   return (

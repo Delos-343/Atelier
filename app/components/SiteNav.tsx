@@ -145,7 +145,7 @@ export function SiteNav() {
   return (
     <motion.nav className="nav-bar" aria-label="Primary" {...barMotion}>
       <div className="mx-auto flex max-w-content items-center gap-4 px-5 py-3 sm:gap-6">
-        <Link href="/" className="flex shrink-0 items-center gap-2.5 no-underline">
+        <Link href="/" aria-label="TechnicoFlor home" className="flex shrink-0 items-center gap-2.5 no-underline">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/brand/mark.png" alt="" width={26} height={30} className="h-[26px] w-auto" />
           <span className="hidden whitespace-nowrap text-[1.05rem] font-semibold tracking-[0.01em] text-text sm:inline">

@@ -1,9 +1,13 @@
 import { NextResponse } from 'next/server';
+import { apiAuth } from '@/lib/auth/api-guard';
 import { recordQc } from '@/server/production';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
+  const auth = await apiAuth('qc');
+  if (!auth.ok) return auth.response;
+
   const body = await request.json().catch(() => null);
   if (!body) return NextResponse.json({ error: 'invalid JSON body' }, { status: 400 });
 

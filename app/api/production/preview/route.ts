@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { supabaseNotConfigured } from '@/lib/supabase/guard';
+import { apiAuth } from '@/lib/auth/api-guard';
 import { previewProductionOrder } from '@/server/production';
 import { getFormulaVersionHalal } from '@/server/compliance';
 import { previewProductionOrderSchema } from '@/schemas/production';
@@ -14,6 +13,11 @@ interface MaterialRow {
 }
 
 export async function POST(request: Request) {
+  // Gate the preview: it returns the exploded BOM (recipe proportions), which is
+  // trade-secret data that viewers must never see.
+  const auth = await apiAuth('production');
+  if (!auth.ok) return auth.response;
+
   const body = await request.json().catch(() => null);
   const parsed = previewProductionOrderSchema.safeParse(body);
   if (!parsed.success) {
@@ -30,9 +34,8 @@ export async function POST(request: Request) {
   );
   if (!result.ok) return NextResponse.json({ error: result.error }, { status: 400 });
 
-  // enrich planned consumption with readable material names
-  const supabase = createClient();
-  if (!supabase) return supabaseNotConfigured();
+  // enrich planned consumption with readable material names (reusing the authed client)
+  const supabase = auth.supabase;
   const ids = result.data.map((c) => c.rawMaterialId);
   const { data: mats } = await supabase.from('raw_materials').select('id, sku, name').in('id', ids);
   const byId = new Map((((mats ?? []) as unknown) as MaterialRow[]).map((m) => [m.id, m]));

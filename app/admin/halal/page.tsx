@@ -105,7 +105,7 @@ export default function HalalCompliancePage() {
           <p className={`mt-2 ${stateBox}`}>No raw materials yet.</p>
         ) : (
           <div className="mt-2 overflow-x-auto">
-            <table className="w-full text-sm">
+            <div className="w-full overflow-x-auto"><table className="w-full text-sm min-w-[38rem]">
               <thead>
                 <tr className="text-left text-muted">
                   <th className="py-2 pr-3 font-medium">SKU</th>
@@ -196,7 +196,7 @@ export default function HalalCompliancePage() {
                   );
                 })}
               </tbody>
-            </table>
+            </table></div>
           </div>
         )}
       </section>
@@ -217,7 +217,7 @@ export default function HalalCompliancePage() {
           <p className={`mt-2 ${stateBox}`}>No formula versions yet.</p>
         ) : data ? (
           <div className="mt-2 overflow-x-auto">
-            <table className="w-full text-sm">
+            <div className="w-full overflow-x-auto"><table className="w-full text-sm min-w-[38rem]">
               <thead>
                 <tr className="text-left text-muted">
                   <th className="py-2 pr-3 font-medium">Formula</th>
@@ -262,7 +262,7 @@ export default function HalalCompliancePage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table></div>
           </div>
         ) : null}
       </section>

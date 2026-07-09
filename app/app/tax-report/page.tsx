@@ -31,7 +31,7 @@ function FakturTable({ title, partyLabel, lines }: { title: string; partyLabel: 
       {lines.length === 0 ? (
         <p className="mt-2 text-muted text-[0.85rem]">No documents in this period.</p>
       ) : (
-        <table className="mt-2 w-full text-[0.85rem]">
+        <div className="w-full overflow-x-auto"><table className="mt-2 w-full text-[0.85rem] min-w-[44rem]">
           <thead>
             <tr className="text-muted text-[0.72rem] uppercase tracking-[0.06em]">
               <th className="py-1 text-left font-medium">Document</th>
@@ -61,7 +61,7 @@ function FakturTable({ title, partyLabel, lines }: { title: string; partyLabel: 
               <td className="py-1 text-right mono">{money(tax)}</td>
             </tr>
           </tbody>
-        </table>
+        </table></div>
       )}
     </section>
   );
@@ -131,16 +131,18 @@ export default function TaxReportPage() {
       </PageHeader>
 
       <div className="card">
-        <div className="flex flex-wrap items-end gap-3">
-          <label className="block">
-            <span className="label">From</span>
-            <input className="input w-40" type="date" value={start} onChange={(e) => setStart(e.target.value)} />
-          </label>
-          <label className="block">
-            <span className="label">To</span>
-            <input className="input w-40" type="date" value={end} onChange={(e) => setEnd(e.target.value)} />
-          </label>
-          <div className="flex flex-wrap gap-2">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+            <label className="block">
+              <span className="label">From</span>
+              <input className="input w-full sm:w-44" type="date" value={start} onChange={(e) => setStart(e.target.value)} />
+            </label>
+            <label className="block">
+              <span className="label">To</span>
+              <input className="input w-full sm:w-44" type="date" value={end} onChange={(e) => setEnd(e.target.value)} />
+            </label>
+          </div>
+          <div className="flex flex-wrap gap-2 sm:justify-end">
             <button type="button" className="btn btn-sm btn-ghost" onClick={() => setMonth(0)}>
               This month
             </button>
@@ -195,7 +197,7 @@ export default function TaxReportPage() {
 
           {allLines.length > 0 && (
             <section className="mt-6">
-              <div className="mb-2 flex items-center justify-between gap-3">
+              <div className="mb-2 flex flex-wrap items-center justify-between gap-3">
                 <h2 className="section-label">Faktur Pajak detail</h2>
                 <button type="button" className="btn btn-sm btn-ghost" onClick={exportCsv}>
                   Export CSV

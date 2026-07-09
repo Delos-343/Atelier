@@ -25,7 +25,7 @@ export function DataTable<T>({
         <thead>
           <tr>
             {columns.map((c) => (
-              <th key={c.key} className={c.align === 'right' ? 'ta-r' : undefined}>
+              <th key={c.key} scope="col" className={c.align === 'right' ? 'ta-r' : undefined}>
                 {c.header}
               </th>
             ))}

@@ -169,12 +169,10 @@ function drawWatermark(page: PDFPage, font: PDFFont, text: string) {
 }
 
 export async function composeDocumentPdf(spec: DocumentPdfSpec): Promise<Uint8Array> {
-
   const pdf = await PDFDocument.create();
-  
   pdf.setTitle(`${spec.title} ${spec.metaRight[0]?.value ?? ''}`.trim());
   pdf.setAuthor('TechnicoFlor');
-  pdf.setCreator('TechnicoFlor - Perfume ERP');
+  pdf.setCreator('TechnicoFlor — Perfume ERP');
 
   const page = pdf.addPage([PAGE_W, PAGE_H]);
   const helv = await pdf.embedFont(StandardFonts.Helvetica);

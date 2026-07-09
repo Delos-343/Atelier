@@ -76,37 +76,37 @@ export default function EmailHistoryPage() {
       {history.error && <p className="mt-4 text-bad text-[0.9rem]">{history.error}</p>}
 
       {history.data && (
-        <section className="card mt-4 overflow-x-auto">
+        <section className="card mt-4">
           <p className="mb-2 text-muted text-[0.82rem]">
             {rows.length} of {history.data.length} send{history.data.length === 1 ? '' : 's'}
           </p>
-          <table className="w-full text-[0.9rem]">
+          <table className="table">
             <thead>
-              <tr className="text-muted text-[0.78rem] uppercase tracking-[0.06em]">
-                <th className="py-1 text-left font-medium">Sent</th>
-                <th className="py-1 text-left font-medium">Type</th>
-                <th className="py-1 text-left font-medium">Reference</th>
-                <th className="py-1 text-left font-medium">Party</th>
-                <th className="py-1 text-left font-medium">Recipient</th>
-                <th className="py-1 text-left font-medium">Subject</th>
+              <tr>
+                <th scope="col">Sent</th>
+                <th scope="col">Type</th>
+                <th scope="col">Reference</th>
+                <th scope="col">Party</th>
+                <th scope="col">Recipient</th>
+                <th scope="col">Subject</th>
               </tr>
             </thead>
             <tbody>
               {rows.map((e, i) => (
-                <tr key={i} className="border-t border-[var(--border)]">
-                  <td className="py-1.5 mono whitespace-nowrap">{when(e.sentAt)}</td>
-                  <td className="py-1.5">
+                <tr key={i}>
+                  <td data-label="Sent" className="mono whitespace-nowrap">{when(e.sentAt)}</td>
+                  <td data-label="Type">
                     <span className={`badge ${e.kind === 'statement' ? 'badge-mute' : 'badge-ok'}`}>{label(e)}</span>
                   </td>
-                  <td className="py-1.5 mono">{e.reference ?? '—'}</td>
-                  <td className="py-1.5">{e.partyName ?? '—'}</td>
-                  <td className="py-1.5">{e.recipient}</td>
-                  <td className="py-1.5 text-muted">{e.subject}</td>
+                  <td data-label="Reference" className="mono break-words">{e.reference ?? '—'}</td>
+                  <td data-label="Party" className="break-words">{e.partyName ?? '—'}</td>
+                  <td data-label="Recipient" className="break-words">{e.recipient}</td>
+                  <td data-label="Subject" className="text-muted break-words">{e.subject}</td>
                 </tr>
               ))}
               {rows.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="py-3 text-center text-muted text-[0.88rem]">
+                  <td data-label="" colSpan={6} className="py-3 text-center text-muted text-[0.88rem]">
                     {history.data.length === 0 ? 'No emails have been sent yet.' : 'No sends match your search.'}
                   </td>
                 </tr>

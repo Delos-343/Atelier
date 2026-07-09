@@ -282,7 +282,7 @@ export default function CostingSettingsPage() {
             </p>
           ) : (
             <div className="card overflow-x-auto p-0">
-              <table className="w-full text-[0.85rem]">
+              <div className="w-full overflow-x-auto"><table className="w-full text-[0.85rem] min-w-[34rem]">
                 <thead>
                   <tr className="border-b border-border text-left text-muted">
                     <th className="px-4 py-2.5 font-medium">Product</th>
@@ -331,7 +331,7 @@ export default function CostingSettingsPage() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </table></div>
             </div>
           )}
         </div>
