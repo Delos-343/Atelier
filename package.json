@@ -1,6 +1,6 @@
 {
   "name": "erp-perfume",
-  "version": "0.51.4",
+  "version": "0.51.5",
   "private": true,
   "packageManager": "yarn@1.22.22",
   "description": "Perfume ERP \u2014 manufacturing core (formula -> production -> QC -> inventory)",

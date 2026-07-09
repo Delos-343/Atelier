@@ -228,7 +228,7 @@ export default function ReceiptsPage() {
         <label className="block">
           <span className="label">Customer</span>
           <select
-            className="input w-full sm:w-72"
+            className="input w-full sm:w-80"
             value={customerId}
             onChange={(e) => {
               setCustomerId(e.target.value);
