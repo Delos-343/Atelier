@@ -95,13 +95,13 @@ export function Dashboard({ metrics }: { metrics: DashboardMetrics | null }) {
 
       <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))]">
         <Reveal delay={0}>
-          <ChartCard title="Inventory by status">
+          <ChartCard title="Inventory by Status">
             <HBars items={statusBars} />
           </ChartCard>
         </Reveal>
 
         <Reveal delay={0.08}>
-          <ChartCard title="Quality control">
+          <ChartCard title="Quality Control">
             <Donut
               segments={qcSegments}
               centerValue={passPct == null ? '—' : `${Math.round(passPct)}%`}
@@ -111,14 +111,14 @@ export function Dashboard({ metrics }: { metrics: DashboardMetrics | null }) {
         </Reveal>
 
         <Reveal delay={0.16}>
-          <ChartCard title="Inventory value by material">
+          <ChartCard title="Inventory Value by Material">
             <VBars items={categoryBars} money />
           </ChartCard>
         </Reveal>
 
         <Reveal delay={0.24}>
           <ChartCard
-            title="Production pipeline"
+            title="Production Pipeline"
             right={<span className="text-[0.8rem] text-muted">{production.total} orders</span>}
           >
             <HBars items={pipelineBars} />

@@ -40,7 +40,7 @@ export default function EmailHistoryPage() {
 
   return (
     <Page>
-      <PageHeader title="Email history">
+      <PageHeader title="Email History">
         Every recorded send — issued documents emailed to customers and statements of account — as one
         chronological log, drawn from the append-only trails the system writes only after the mail relay
         accepts.

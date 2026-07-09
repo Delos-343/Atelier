@@ -36,8 +36,8 @@ const GROUPS: Item[][] = [
     { href: '/app/payables', label: 'Payables', admin: true },
   ],
   [
-    { href: '/app/tax-report', label: 'Tax report', admin: true },
-    { href: '/app/email-history', label: 'Email history', admin: true },
+    { href: '/app/tax-report', label: 'Tax Report', admin: true },
+    { href: '/app/email-history', label: 'Email History', admin: true },
   ],
   [{ href: '/admin', label: 'Admin', admin: true }],
 ];

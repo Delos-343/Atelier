@@ -24,7 +24,7 @@ export default function QcPage() {
 
   return (
     <Page>
-      <PageHeader title="Quality control">
+      <PageHeader title="Quality Control">
         Finished lots are quarantined until released. Passing frees stock; rejecting holds it.
       </PageHeader>
       <AsyncView state={state} empty="Nothing awaiting QC.">

@@ -126,7 +126,7 @@ export default function TaxReportPage() {
 
   return (
     <Page>
-      <PageHeader title="Tax report">
+      <PageHeader title="Tax Report">
         <span className="text-muted">Output-vs-input PPN for a period.</span>
       </PageHeader>
 

@@ -69,7 +69,7 @@ export default async function Home() {
         <h1 className="mb-[0.9rem] mt-[0.6rem] text-[clamp(2.6rem,10vw,5rem)] font-semibold leading-[0.96] tracking-[-0.03em]">
           TechnicoFlor
         </h1>
-        <p className="prose-justify max-w-[56ch] text-[clamp(1rem,2.4vw,1.12rem)] text-text-soft">
+        <p className="prose-justify max-w-full text-[clamp(1rem,2.4vw,1.12rem)] text-text-soft">
           A perfume manufacturing system built on a verified core — a formula becomes a batch, a
           batch becomes traceable stock, and nothing silently goes negative. This page is open to
           everyone; the operational console is behind sign-in.
@@ -122,7 +122,7 @@ export default async function Home() {
       </section>
 
       <footer className="mt-8 text-[0.82rem] text-muted">
-        Domain core verified against PostgreSQL. Formula → production → quality → inventory.
+        1981 – 2026 TechnicoFlor Group &amp; | &amp; All Rights Reserved.
       </footer>
     </main>
   );
