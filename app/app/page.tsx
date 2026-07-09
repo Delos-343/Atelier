@@ -14,7 +14,7 @@ export default async function AppDashboard() {
   return (
     <Page>
       <PageHeader title="Operations">
-        {user?.email ? `Signed in as ${user.email}. ` : '\n \n'}
+        {user?.email ? `Signed in as ${user.email}. \n\n` : ''}
         A live view of inventory, production, and quality - figures animate into view, on-load.
       </PageHeader>
       <Dashboard metrics={metrics} />
